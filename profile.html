@@ -1,1 +1,541 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Profile on Randoms</title>
+    
+    <meta property="og:title" content="Profile on Randoms">
+    <meta property="og:description" content="Check out this profile on Randoms!">
+    <meta property="og:site_name" content="Randoms">
+    
+    <style>
+        :root {
+            --bg: #000000;
+            --surface: #1a1a1a;
+            --text: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-tertiary: rgba(255, 255, 255, 0.45);
+            --primary: #6366f1;
+            --border: rgba(255, 255, 255, 0.15);
+            --bubble-bg: #262626;
+            --bubble-border: #3a3a3a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--bg);
+        }
+
+        /* ── Top Banner ──────────────────────────── */
+        .app-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--surface);
+            border-bottom: 0.5px solid rgba(255,255,255,0.08);
+        }
+        .app-banner-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .app-logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            color: white;
+        }
+        .app-name {
+            font-weight: 700;
+            font-size: 16px;
+        }
+        .app-subtitle {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+        .get-app-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        /* ── Profile Header ──────────────────────── */
+        .profile-header {
+            padding: 20px;
+        }
+
+        /* Note bubble */
+        .note-bubble {
+            display: inline-block;
+            max-width: 200px;
+            background: var(--bubble-bg);
+            border: 0.8px solid var(--bubble-border);
+            border-radius: 18px;
+            padding: 9px 14px;
+            font-size: 13px;
+            line-height: 1.3;
+            color: var(--text);
+            margin-bottom: 2px;
+            position: relative;
+        }
+        .note-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 18px;
+            width: 0;
+            height: 0;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-top: 8px solid var(--bubble-border);
+        }
+        .note-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -7px;
+            left: 19px;
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 7px solid var(--bubble-bg);
+            z-index: 1;
+        }
+
+        /* Avatar row */
+        .avatar-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+            margin-top: 4px;
+        }
+        .avatar-wrapper {
+            width: 108px;
+            height: 108px;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, #9C27B0, #6A1B9A);
+            flex-shrink: 0;
+        }
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 700;
+            color: white;
+            overflow: hidden;
+        }
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .name-bio {
+            flex: 1;
+            padding-top: 8px;
+        }
+        .display-name {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .bio {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        /* Action buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .btn-outline {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+        .btn-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .btn-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Stats */
+        .stats-row {
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: 20px;
+            padding: 8px 0;
+        }
+        .stat-item {
+            text-align: center;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.15s;
+        }
+        .stat-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 4px;
+        }
+
+        /* ── Posts Grid ──────────────────────────── */
+        .grid-title {
+            padding: 16px 20px 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            padding: 0 2px;
+        }
+        .grid-item {
+            aspect-ratio: 1;
+            background: var(--surface);
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .grid-item .play-badge {
+            position: absolute;
+            bottom: 6px;
+            right: 6px;
+            width: 22px;
+            height: 22px;
+            background: rgba(0,0,0,0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .grid-item .play-badge svg {
+            width: 12px;
+            height: 12px;
+            fill: white;
+        }
+
+        /* Placeholder for empty grid */
+        .empty-grid {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255,255,255,0.25);
+            font-size: 14px;
+        }
+
+        /* ── Overlay ─────────────────────────────── */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+        .overlay.show { display: flex; }
+        .overlay-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            max-width: 340px;
+            width: 90%;
+        }
+        .overlay-card h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        .overlay-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+        .overlay-card .download-btn {
+            display: block;
+            background: var(--primary);
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+        .overlay-card .cancel-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* ── Responsive ──────────────────────────── */
+        @media (max-width: 380px) {
+            .avatar-wrapper {
+                width: 88px;
+                height: 88px;
+            }
+            .display-name { font-size: 16px; }
+            .stat-value { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- ── App Download Banner ──────────────────── -->
+        <div class="app-banner">
+            <div class="app-banner-left">
+                <div class="app-logo">R</div>
+                <div>
+                    <div class="app-name">Randoms</div>
+                    <div class="app-subtitle">See full profile on the app</div>
+                </div>
+            </div>
+            <a class="get-app-btn" href="https://play.google.com/store/apps/details?id=com.ras.androidzing" target="_blank">
+                Get App
+            </a>
+        </div>
+
+        <!-- ── Profile Header ────────────────────────── -->
+        <div class="profile-header">
+            
+            <!-- Note bubble -->
+            <div class="note-bubble" id="note-bubble" style="display:none;">
+                <span id="note-text">Hey there! I'm using Randoms ✨</span>
+            </div>
+
+            <!-- Avatar + Name/Bio -->
+            <div class="avatar-row">
+                <div class="avatar-wrapper" id="avatar-wrapper">
+                    <div class="avatar" id="avatar">
+                        <span id="avatar-initial">U</span>
+                    </div>
+                </div>
+                <div class="name-bio">
+                    <div class="display-name" id="display-name">Display Name</div>
+                    <div class="bio" id="bio">No bio yet</div>
+                </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="action-buttons" id="action-buttons">
+                <!-- Default: viewing someone else's profile -->
+                <button class="btn-outline" onclick="showPlayStore()">Follow</button>
+                <button class="btn-outline" onclick="showPlayStore()">Message</button>
+                <button class="btn-icon" onclick="showPlayStore()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-value" id="posts-count">0</div>
+                    <div class="stat-label">Posts</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="followers-count">0</div>
+                    <div class="stat-label">Followers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="following-count">0</div>
+                    <div class="stat-label">Following</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Posts Grid ────────────────────────────── -->
+        <div class="grid-title">Posts</div>
+        <div class="posts-grid" id="posts-grid">
+            <!-- Placeholder items -->
+            <div class="grid-item"><img src="https://via.placeholder.com/300/1a1a1a/6366f1?text=1" alt="Post 1"></div>
+            <div class="grid-item"><img src="https://via.placeholder.com/300/1a1a1a/a855f7?text=2" alt="Post 2"></div>
+            <div class="grid-item"><img src="https://via.placeholder.com/300/1a1a1a/ec4899?text=3" alt="Post 3"></div>
+            <div class="grid-item"><img src="https://via.placeholder.com/300/1a1a1a/6366f1?text=4" alt="Post 4"></div>
+            <div class="grid-item">
+                <img src="https://via.placeholder.com/300/1a1a1a/a855f7?text=5" alt="Post 5">
+                <div class="play-badge">
+                    <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21" fill="white"/></svg>
+                </div>
+            </div>
+            <div class="grid-item"><img src="https://via.placeholder.com/300/1a1a1a/ec4899?text=6" alt="Post 6"></div>
+        </div>
+    </div>
+
+    <!-- ── Play Store Overlay ──────────────────────── -->
+    <div class="overlay" id="playstore-overlay">
+        <div class="overlay-card">
+            <h2>📱 Get the Randoms App</h2>
+            <p>Follow, message, and see all posts on the full Randoms experience.</p>
+            <a class="download-btn" href="https://play.google.com/store/apps/details?id=com.ras.androidzing" target="_blank">
+                Download on Google Play
+            </a>
+            <button class="cancel-btn" onclick="hidePlayStore()">Not now</button>
+        </div>
+    </div>
+
+    <script>
+        // ── Try to open app immediately ──────────────
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const userId = params.get('id') || 'demo';
+            const deepLink = 'randomsapp://profile/' + userId;
+            window.location.href = deepLink;
+        })();
+
+        // ── Overlay ──────────────────────────────────
+        function showPlayStore() {
+            document.getElementById('playstore-overlay').classList.add('show');
+        }
+        function hidePlayStore() {
+            document.getElementById('playstore-overlay').classList.remove('show');
+        }
+
+        // ── Load data from URL params ────────────────
+        function loadProfileData() {
+            const params = new URLSearchParams(window.location.search);
+            
+            if (params.get('username')) {
+                document.getElementById('display-name').textContent = params.get('username');
+                document.getElementById('avatar-initial').textContent = 
+                    params.get('username').charAt(0).toUpperCase();
+            }
+            if (params.get('name')) {
+                document.getElementById('display-name').textContent = params.get('name');
+            }
+            if (params.get('bio')) {
+                document.getElementById('bio').textContent = params.get('bio');
+            }
+            if (params.get('note')) {
+                document.getElementById('note-text').textContent = params.get('note');
+                document.getElementById('note-bubble').style.display = 'inline-block';
+            }
+            if (params.get('avatar')) {
+                document.getElementById('avatar').innerHTML = 
+                    '<img src="' + params.get('avatar') + '" alt="avatar">';
+            }
+            if (params.get('posts')) {
+                document.getElementById('posts-count').textContent = params.get('posts');
+            }
+            if (params.get('followers')) {
+                document.getElementById('followers-count').textContent = params.get('followers');
+            }
+            if (params.get('following')) {
+                document.getElementById('following-count').textContent = params.get('following');
+            }
+            if (params.get('isOwn') === 'true') {
+                document.getElementById('action-buttons').innerHTML = `
+                    <button class="btn-outline" onclick="showPlayStore()">Edit Profile</button>
+                    <button class="btn-icon" onclick="showPlayStore()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                    <button class="btn-icon" onclick="showPlayStore()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </button>
+                `;
+            }
+            if (params.get('isPrivate') === 'true') {
+                const followBtn = document.querySelector('.btn-outline');
+                if (followBtn) followBtn.textContent = '🔒 Follow';
+            }
+        }
+
+        // Make all grid items clickable → Play Store
+        document.querySelectorAll('.grid-item').forEach(item => {
+            item.addEventListener('click', showPlayStore);
+        });
+
+        // Make stat items clickable → Play Store
+        document.querySelectorAll('.stat-item').forEach(item => {
+            item.addEventListener('click', showPlayStore);
+        });
+
+        loadProfileData();
+    </script>
+</body>
+</html>
