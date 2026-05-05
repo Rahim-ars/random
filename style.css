@@ -1,1 +1,347 @@
 
+/* ── Randoms Landing Pages — Shared Styles ───────────────────── */
+/* Used by: index.html, post.html, short.html, profile.html      */
+
+:root {
+    --bg: #000000;
+    --surface: #1a1a1a;
+    --surface-hover: #252525;
+    --text: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-tertiary: rgba(255, 255, 255, 0.45);
+    --primary: #6366f1;
+    --primary-gradient: linear-gradient(135deg, #6366f1, #a855f7);
+    --accent: #a855f7;
+    --red: #ef4444;
+    --green: #22c55e;
+    --blue: #3b82f6;
+    --border: rgba(255, 255, 255, 0.15);
+    --border-light: rgba(255, 255, 255, 0.08);
+    --divider: rgba(255, 255, 255, 0.08);
+    --bubble-bg: #262626;
+    --bubble-border: #3a3a3a;
+    --overlay-bg: rgba(0, 0, 0, 0.85);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-full: 50%;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ── Reset ────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+/* ── Container ────────────────────────────────────────────────── */
+.container {
+    width: 100%;
+    max-width: 500px;
+    background: var(--bg);
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+/* ── Top App Banner ───────────────────────────────────────────── */
+.app-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--surface);
+    border-bottom: 0.5px solid var(--divider);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.app-banner-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.app-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: var(--primary-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+    color: white;
+    flex-shrink: 0;
+}
+
+.app-name {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text);
+}
+
+.app-subtitle {
+    font-size: 12px;
+    color: var(--text-tertiary);
+}
+
+/* ── Buttons ──────────────────────────────────────────────────── */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary);
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--radius-xl);
+    font-weight: 600;
+    font-size: 13px;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+
+.btn-outline:hover {
+    background: var(--surface-hover);
+}
+
+.btn-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.15s;
+}
+
+.btn-icon:hover {
+    background: var(--surface-hover);
+}
+
+/* ── Play Store Overlay ───────────────────────────────────────── */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--overlay-bg);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.overlay.show {
+    display: flex;
+}
+
+.overlay-card {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 32px 24px;
+    text-align: center;
+    max-width: 340px;
+    width: 90%;
+    animation: slideUp 0.3s ease-out;
+}
+
+.overlay-card h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: var(--text);
+}
+
+.overlay-card p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.overlay-card .download-btn {
+    display: block;
+    background: var(--primary-gradient);
+    color: white;
+    padding: 14px 24px;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 12px;
+    transition: transform 0.15s;
+}
+
+.overlay-card .download-btn:hover {
+    transform: scale(1.02);
+}
+
+.overlay-card .cancel-btn {
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 8px;
+    transition: color 0.15s;
+}
+
+.overlay-card .cancel-btn:hover {
+    color: var(--text-secondary);
+}
+
+/* ── Animations ───────────────────────────────────────────────── */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes heartBeat {
+    0% { transform: scale(0); opacity: 1; }
+    25% { transform: scale(1.3); opacity: 1; }
+    50% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.2); opacity: 0; }
+}
+
+/* ── Spinner ──────────────────────────────────────────────────── */
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: var(--radius-full);
+    animation: spin 0.6s linear infinite;
+}
+
+/* ── Empty State ──────────────────────────────────────────────── */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-tertiary);
+}
+
+.empty-state svg {
+    margin-bottom: 16px;
+    opacity: 0.4;
+}
+
+.empty-state p {
+    font-size: 14px;
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 380px) {
+    .app-banner {
+        padding: 10px 12px;
+    }
+    .app-logo {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+    }
+    .app-name {
+        font-size: 14px;
+    }
+    .btn-primary {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+}
