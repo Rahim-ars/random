@@ -1,4 +1,3 @@
-
 [
   {
     "relation": ["delegate_permission/common.handle_all_urls"],
@@ -6,7 +5,7 @@
       "namespace": "android_app",
       "package_name": "com.ras.androidzing",
       "sha256_cert_fingerprints": [
-        "YOUR_DEBUG_SHA256_HERE"
+        "6400FD27F88E86E91B4C819340FC9690DDDFD64F"
       ]
     }
   }
