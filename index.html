@@ -1,1 +1,179 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Randoms — Social, Reimagined</title>
+    
+    <meta name="description" content="Randoms is where authentic connections happen. Share moments, watch cuts, and discover new people.">
+    <meta property="og:title" content="Randoms — Social, Reimagined">
+    <meta property="og:description" content="Randoms is where authentic connections happen. Share moments, watch cuts, and discover new people.">
+    <meta property="og:site_name" content="Randoms">
+    <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==">
+    
+    <style>
+        /* ── Hero Section ──────────────────────────── */
+        .hero {
+            text-align: center;
+            padding: 60px 24px 40px;
+        }
+        .hero-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 36px;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
+        }
+        .hero h1 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            max-width: 320px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        /* ── Feature Cards ─────────────────────────── */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 0 16px 32px;
+        }
+        .feature-card {
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            padding: 20px 12px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+        }
+        .feature-card .icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 20px;
+        }
+        .feature-card h3 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .feature-card p {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            line-height: 1.4;
+        }
+
+        /* ── Download Section ──────────────────────── */
+        .download-section {
+            text-align: center;
+            padding: 20px 24px 40px;
+        }
+        .download-btn-large {
+            display: block;
+            background: var(--primary-gradient);
+            color: white;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            margin-bottom: 16px;
+            transition: transform 0.15s;
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+        }
+        .download-btn-large:hover {
+            transform: scale(1.02);
+        }
+        .app-info {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        /* ── Responsive ───────────────────────────── */
+        @media (max-width: 380px) {
+            .hero { padding: 40px 20px 30px; }
+            .hero-logo { width: 64px; height: 64px; font-size: 28px; border-radius: 16px; }
+            .hero h1 { font-size: 24px; }
+            .features { grid-template-columns: 1fr; gap: 8px; }
+            .feature-card { display: flex; align-items: center; gap: 12px; text-align: left; padding: 16px; }
+            .feature-card .icon { margin: 0; width: 36px; height: 36px; font-size: 16px; border-radius: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- ── Hero ──────────────────────────────────── -->
+        <div class="hero">
+            <div class="hero-logo">R</div>
+            <h1>Randoms</h1>
+            <p>Social media, reimagined. Share moments, watch cuts, and connect with people who get you.</p>
+        </div>
+
+        <!-- ── Features ───────────────────────────────── -->
+        <div class="features">
+            <div class="feature-card">
+                <div class="icon">📸</div>
+                <div>
+                    <h3>Posts</h3>
+                    <p>Share photos & stories</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🎬</div>
+                <div>
+                    <h3>Cuts</h3>
+                    <p>Short vertical videos</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="icon">👥</div>
+                <div>
+                    <h3>Connect</h3>
+                    <p>Follow & message friends</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Download ───────────────────────────────── -->
+        <div class="download-section">
+            <a class="download-btn-large" href="https://play.google.com/store/apps/details?id=com.ras.androidzing" target="_blank">
+                ⬇ Download on Google Play
+            </a>
+            <p class="app-info">Free • Social • com.ras.androidzing</p>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Try to open app if installed
+        RandomsLanding.tryOpenApp('');
+    </script>
+</body>
+</html>
