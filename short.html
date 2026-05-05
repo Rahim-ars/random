@@ -1,1 +1,594 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Cuts on Randoms</title>
+    
+    <meta property="og:title" content="Cuts on Randoms">
+    <meta property="og:description" content="Check out this cut on Randoms!">
+    <meta property="og:site_name" content="Randoms">
+    
+    <style>
+        :root {
+            --bg: #000000;
+            --text: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.6);
+            --text-tertiary: rgba(255, 255, 255, 0.35);
+            --primary: #6366f1;
+            --red: #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            height: 100dvh;
+            width: 100vw;
+            width: 100dvw;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            height: 100vh;
+            height: 100dvh;
+            position: relative;
+            background: var(--bg);
+            overflow: hidden;
+        }
+
+        /* ── Video Area ──────────────────────────── */
+        .video-area {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #111;
+        }
+        .video-area img,
+        .video-area video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .video-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.3);
+        }
+        .video-placeholder svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 16px;
+        }
+
+        /* ── Top Bar ─────────────────────────────── */
+        .top-bar {
+            position: absolute;
+            top: max(8px, env(safe-area-inset-top));
+            left: 8px;
+            right: 8px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            background: rgba(0,0,0,0.45);
+            border-radius: 12px;
+            border: 0.5px solid rgba(255,255,255,0.12);
+            padding: 0 4px;
+            z-index: 10;
+            gap: 4px;
+        }
+        .top-bar .mute-btn {
+            width: 36px;
+            height: 36px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .top-bar .search-box {
+            flex: 1;
+            height: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            border: 0.5px solid rgba(255,255,255,0.07);
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .top-bar .search-box span {
+            color: #999;
+            font-size: 12px;
+        }
+        .top-bar .more-btn {
+            width: 36px;
+            height: 36px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* ── Right Action Buttons ────────────────── */
+        .right-actions {
+            position: absolute;
+            right: 10px;
+            bottom: 15%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            z-index: 10;
+        }
+        .action-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+        }
+        .action-item svg {
+            width: 30px;
+            height: 30px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+        }
+        .action-item .count {
+            font-size: 12px;
+            font-weight: 600;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+        }
+        .follow-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1.5px solid white;
+            background: transparent;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-bottom: 4px;
+        }
+        .spinning-disc {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255,255,255,0.3);
+            background: radial-gradient(circle, #2a2a2a, #0a0a0a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            animation: spin 4s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ── Bottom Overlay ───────────────────────── */
+        .bottom-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 80px;
+            padding: 0 14px 20px 14px;
+            background: linear-gradient(to top, 
+                rgba(0,0,0,0.88) 0%, 
+                rgba(0,0,0,0.5) 25%, 
+                rgba(0,0,0,0.18) 55%, 
+                transparent 100%);
+            z-index: 10;
+        }
+        .user-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #333;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .username-text {
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .caption-text {
+            font-size: 13px;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .caption-text.expanded {
+            -webkit-line-clamp: unset;
+            display: block;
+        }
+        .audio-row {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .audio-row span {
+            font-size: 12px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .progress-bar {
+            height: 2px;
+            background: rgba(255,255,255,0.18);
+            border-radius: 1px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 35%;
+            background: white;
+            border-radius: 1px;
+        }
+
+        /* ── Overlay ─────────────────────────────── */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+        .overlay.show { display: flex; }
+        .overlay-card {
+            background: #1a1a1a;
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            max-width: 340px;
+            width: 90%;
+        }
+        .overlay-card h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        .overlay-card p {
+            color: rgba(255,255,255,0.55);
+            font-size: 14px;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+        .overlay-card .download-btn {
+            display: block;
+            background: var(--primary);
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+        .overlay-card .cancel-btn {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.55);
+            font-size: 14px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* ── Like Animation ───────────────────────── */
+        .like-anim {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            z-index: 20;
+            pointer-events: none;
+            transition: transform 0.15s ease-out;
+        }
+        .like-anim.show {
+            transform: translate(-50%, -50%) scale(1);
+            animation: popLike 0.9s ease-out forwards;
+        }
+        @keyframes popLike {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            30% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+            60% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0; }
+        }
+
+        /* ── Get App Banner ──────────────────────── */
+        .get-app-mini {
+            position: absolute;
+            bottom: 100px;
+            left: 14px;
+            right: 90px;
+            background: rgba(99, 102, 241, 0.9);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 15;
+            cursor: pointer;
+        }
+        .get-app-mini span {
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        
+        <!-- ── Video Area ──────────────────────────── -->
+        <div class="video-area" id="video-area" onclick="handleTap()">
+            <div class="video-placeholder" id="video-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <polygon points="5,3 19,12 5,21" fill="currentColor" opacity="0.3"/>
+                </svg>
+                <span style="font-size:14px;color:rgba(255,255,255,0.4);">Video preview</span>
+            </div>
+        </div>
+
+        <!-- ── Like Animation ───────────────────────── -->
+        <div class="like-anim" id="like-anim">
+            <svg viewBox="0 0 24 24" width="88" height="88" fill="white" style="filter: drop-shadow(0 0 16px rgba(0,0,0,0.5));">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+        </div>
+
+        <!-- ── Top Bar ──────────────────────────────── -->
+        <div class="top-bar">
+            <button class="mute-btn" title="Mute">
+                <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="white" stroke-width="2">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                </svg>
+            </button>
+            <div class="search-box" onclick="showPlayStore()">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#999" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <span>Search cuts…</span>
+            </div>
+            <button class="more-btn" onclick="showPlayStore()">
+                <svg viewBox="0 0 24 24" width="19" height="19" fill="white">
+                    <circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- ── Right Actions ────────────────────────── -->
+        <div class="right-actions">
+            <button class="follow-btn" onclick="showPlayStore()">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="white" stroke-width="2">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/>
+                    <line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/>
+                </svg>
+            </button>
+            
+            <button class="action-item" onclick="showPlayStore()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <span class="count" id="likes-count">1.2K</span>
+            </button>
+            
+            <button class="action-item" onclick="showPlayStore()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+                <span class="count" id="comments-count">89</span>
+            </button>
+            
+            <button class="action-item" onclick="showPlayStore()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+                <span class="count" id="shares-count">45</span>
+            </button>
+            
+            <button class="action-item" onclick="showPlayStore()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                </svg>
+                <span class="count" id="saves-count">12</span>
+            </button>
+            
+            <div class="spinning-disc" onclick="showPlayStore()">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="rgba(255,255,255,0.7)">
+                    <path d="M9 18V5l12-2v13"/>
+                    <circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- ── Bottom Overlay ───────────────────────── -->
+        <div class="bottom-overlay">
+            <div class="user-row">
+                <div class="user-avatar" id="user-avatar">
+                    <span style="display:flex;align-items:center;justify-content:center;height:100%;font-size:16px;font-weight:700;">U</span>
+                </div>
+                <span class="username-text" id="username-display" onclick="showPlayStore()">username</span>
+            </div>
+            <div class="caption-text" id="caption-text" onclick="toggleCaption()">
+                <span id="caption-content">Check out this cut on Randoms! 🔥</span>
+            </div>
+            <div class="audio-row" onclick="showPlayStore()">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="rgba(255,255,255,0.6)">
+                    <path d="M9 18V5l12-2v13"/>
+                </svg>
+                <span id="audio-info">Original Sound • username</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- ── Get App Mini Banner ──────────────────── -->
+        <div class="get-app-mini" onclick="openPlayStore()">
+            <span>📱 Get Randoms to like & comment</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="white">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+        </div>
+
+    </div>
+
+    <!-- ── Overlay ─────────────────────────────────── -->
+    <div class="overlay" id="playstore-overlay">
+        <div class="overlay-card">
+            <h2>📱 Get the Randoms App</h2>
+            <p>Like, comment, follow creators, and watch more cuts on the full Randoms experience.</p>
+            <a class="download-btn" href="https://play.google.com/store/apps/details?id=com.ras.androidzing" target="_blank">
+                Download on Google Play
+            </a>
+            <button class="cancel-btn" onclick="hidePlayStore()">Not now</button>
+        </div>
+    </div>
+
+    <script>
+        // ── Try to open app immediately ──────────────
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const shortId = params.get('id') || 'demo';
+            const deepLink = 'randomsapp://short/' + shortId;
+            window.location.href = deepLink;
+        })();
+
+        // ── Tap handling (single = pause overlay, double = like anim) ──
+        let tapTimer = null;
+        let tapCount = 0;
+
+        function handleTap() {
+            tapCount++;
+            if (tapCount === 1) {
+                tapTimer = setTimeout(() => {
+                    // Single tap - would toggle play/pause in app
+                    tapCount = 0;
+                }, 250);
+            } else {
+                clearTimeout(tapTimer);
+                tapCount = 0;
+                showLikeAnimation();
+            }
+        }
+
+        function showLikeAnimation() {
+            const anim = document.getElementById('like-anim');
+            anim.classList.remove('show');
+            void anim.offsetWidth; // reflow
+            anim.classList.add('show');
+        }
+
+        // ── Caption toggle ────────────────────────────
+        function toggleCaption() {
+            const caption = document.getElementById('caption-text');
+            caption.classList.toggle('expanded');
+        }
+
+        // ── Play Store ────────────────────────────────
+        function showPlayStore() {
+            document.getElementById('playstore-overlay').classList.add('show');
+        }
+
+        function hidePlayStore() {
+            document.getElementById('playstore-overlay').classList.remove('show');
+        }
+
+        function openPlayStore() {
+            window.open('https://play.google.com/store/apps/details?id=com.ras.androidzing', '_blank');
+        }
+
+        // ── Load data from URL params ──────────────────
+        function loadShortData() {
+            const params = new URLSearchParams(window.location.search);
+            
+            if (params.get('username')) {
+                document.getElementById('username-display').textContent = params.get('username');
+                const avatar = document.getElementById('user-avatar');
+                avatar.innerHTML = '<span style="display:flex;align-items:center;justify-content:center;height:100%;font-size:16px;font-weight:700;">' + 
+                    params.get('username').charAt(0).toUpperCase() + '</span>';
+            }
+            if (params.get('caption')) {
+                document.getElementById('caption-content').textContent = params.get('caption');
+            }
+            if (params.get('audio')) {
+                document.getElementById('audio-info').textContent = params.get('audio');
+            }
+            if (params.get('likes')) {
+                document.getElementById('likes-count').textContent = params.get('likes');
+            }
+            if (params.get('comments')) {
+                document.getElementById('comments-count').textContent = params.get('comments');
+            }
+            if (params.get('shares')) {
+                document.getElementById('shares-count').textContent = params.get('shares');
+            }
+            if (params.get('saves')) {
+                document.getElementById('saves-count').textContent = params.get('saves');
+            }
+            if (params.get('thumbnail')) {
+                const videoArea = document.getElementById('video-area');
+                videoArea.innerHTML = '<img src="' + params.get('thumbnail') + '" alt="Video thumbnail" style="width:100%;height:100%;object-fit:cover;">';
+            }
+            if (params.get('avatar')) {
+                document.getElementById('user-avatar').innerHTML = 
+                    '<img src="' + params.get('avatar') + '" alt="avatar">';
+            }
+        }
+
+        loadShortData();
+    </script>
+</body>
+</html>
